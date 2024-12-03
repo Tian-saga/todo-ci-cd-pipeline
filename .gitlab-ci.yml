@@ -1,0 +1,17 @@
+stages:
+  - build
+  - package
+  - staging
+  - e2e_testing
+  - deployment
+
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+    - npx serve -s ./dist -l 3000 &
+    - curl http://localhost:3000 | grep ToDO
+  only:
+    - main
+    - develop
